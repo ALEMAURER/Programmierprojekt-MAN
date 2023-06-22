@@ -1,98 +1,131 @@
 import turtle
-from turtle import*
-shape("turtle")
-hideturtle()
-speed(5)
-
+t = turtle.Pen()
+t.shape("turtle")
+t.hideturtle()
+t.speed(5)
 
 def huegel():
-    penup()
-    home()
-    pendown()
-    left(90)
-    penup()
-    backward(200)
-    pendown()
-    circle(100,180)
-    right(90)
-    penup()
-    backward(100)
-    right(90)
-    forward(100)
-    pendown()
-
+    t.penup()
+    t.home()
+    t.left(180)
+    t.forward(100)
+    t.left(90)
+    t.forward(200)
+    t.left(180)
+    t.pendown()
+    t.circle(50,180)
+    t.right(90)
+    t.penup()
+    t.backward(50)
+    t.right(90)
+    t.forward(50)
+    t.pendown()
 
 def Boden():
-    penup()
-    right(90)
-    forward(200)
-    left(90)
-    forward(400)
-    left(180)
-    pendown()
-    forward(800)
+    t.penup()
+    t.right(90)
+    t.forward(200)
+    t.left(90)
+    t.forward(400)
+    t.left(180)
+    t.pendown()
+    t.forward(800)
 
 def senkrechte():
-    forward(250)
-    right(90)
+    t.forward(150)
+    t.right(90)
+
 
 def waagerechte():
-    forward(300)
-    right(90)
+    t.forward(100)
+    t.right(90)
 
 def senkrechte2():
-    forward(50)
-    penup()
-    right(90)
-    pendown()
+    t.forward(20)
+    t.penup()
+    t.right(90)
+    t.pendown()
+
 
 def Kreis():
-    circle(35)
-    penup()
-    left(90)
-    forward(70)
-    pendown()
+    t.circle(15)
+    t.penup()
+    t.left(90)
+    t.forward(30)
+    t.pendown()
 
 def Senkrechte3():
-    forward(100)
+    t.pendown()
+    t.forward(50)
+
 
 def Arme():
-    right(180)
-    forward(70)
-    right(135)
-    forward(40)
-    right(180)
-    forward(40)
-    left(90)
-    forward(40)
-    right(180)
-    forward(40)
-    right(135)
+    t.right(180)
+    t.forward(30)
+    t.right(135)
+    t.forward(20)
+    t.right(180)
+    t.forward(20)
+    t.left(90)
+    t.forward(20)
+    t.right(180)
+    t.forward(20)
+    t.right(135)
+
 
 def Beine():
-    forward(70)
-    right(35)
-    forward(90)
-    right(180)
-    forward(90)
-    right(110)
-    fd(90)
-    right(180)
+    t.forward(50)
+    t.right(35)
+    t.forward(40)
+    t.right(180)
+    t.forward(40)
+    t.right(110)
+    t.fd(40)
+    t.right(180)
 
-print(Boden())
-print(huegel())
-print(senkrechte())
-print(waagerechte())
-print(senkrechte2())
-print(Kreis())
-print(Senkrechte3())
-print(Arme())
-print(Beine())
+zeichenliste = [Boden, huegel, senkrechte, waagerechte, senkrechte2, Kreis, Senkrechte3, Arme, Beine]
 
 
 schritte = [Boden, huegel, senkrechte, waagerechte, senkrechte2, Kreis, Senkrechte3, Arme, Beine]
 
-for schritt in schritte:
-    turtle.textinput("Hangman", "Welchen Buchstaben wählen Sie?")
+import random
+import turtle
+import wortliste
 
-    
+# Zufälliges Wort auswählen
+wort = random.choice(wortliste.wörter)
+
+# Turtle-Objekt erstellen
+s = turtle.Pen()
+s.hideturtle()
+
+def drawlines(geratenes):
+  s.clear()
+  s.penup()
+  s.goto(-100, 80)
+  s.pendown()
+  for buchstabe in wort:
+    s.pendown()
+    s.forward(10)
+    if buchstabe in geratenes:
+      s.write(buchstabe, align="center", font="arial 12 bold")
+    s.forward(10)
+    s.penup()
+    s.forward(20)
+    s.pendown()
+
+gefunden = ""
+
+# Initialer Aufruf von drawlines, um die Anzahl der Buchstaben anzuzeigen
+drawlines(gefunden)
+
+for schritt in schritte:
+  buchstabe = turtle.textinput("Hangman", "Welchen Buchstaben tippen Sie?") or ""
+  while buchstabe.lower() in wort or buchstabe.upper() in wort:
+    gefunden = gefunden + buchstabe.lower() + buchstabe.upper()
+    drawlines(gefunden)
+    buchstabe = turtle.textinput("Hangman", "Welchen Buchstaben tippen Sie?") or ""
+  else:
+    schritt()
+
+
